@@ -48,6 +48,17 @@ class BotGUI(ctk.CTk):
 async def on_ready():
     print(f"Logged in as {bot.user}")
 
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return  # Ignore messages from the bot itself
+    
+    if message.content.lower():
+        await message.channel.send(f"{message.author} said: {message.content}")
+        await message.channel.send("Hello Daddy!")
+
+    await bot.process_commands(message)  # Ensure commands still work
+
 @bot.command()
 async def hello(ctx):
     await ctx.send("Hello! I'm your bot!")
